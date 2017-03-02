@@ -7,7 +7,7 @@ setup(
   author = 'Baurin Leza',
   author_email = 'baurin.lg@gmail.com',
   url = 'https://github.com/trpill/stationdiy', # use the URL to the github repo
-  download_url = 'https://github.com/trpill/stationdiy/new/master/archive/0.1.tar.gz', # I'll explain this in a second
+  download_url = 'https://github.com/trpill/stationdiy/archive/master.zip', # I'll explain this in a second
   keywords = ['stationdiy', 'iot', 'internet'], #  keywords
   classifiers = [],
 )
