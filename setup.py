@@ -2,8 +2,8 @@ from distutils.core import setup
 setup(
   name = 'stationdiy',
   packages = ['stationdiy'], # this must be the same as the name above
-  version = '0.1',
-  description = 'A random test lib',
+  version = '0.2',
+  description = 'Custom Controller for StationDiY IoT platform',
   author = 'Baurin Leza',
   author_email = 'baurin.lg@gmail.com',
   url = 'https://github.com/trpill/stationdiy', # use the URL to the github repo
