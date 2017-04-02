@@ -11,6 +11,9 @@ setup(
   keywords = ['stationdiy', 'iot', 'internet'], #  keywords
   classifiers = [],
   install_requires=[
-        'paho-mqtt'
+        'paho-mqtt',
+        'requests',
+        'random',
+        'threading',
     ]
 )
