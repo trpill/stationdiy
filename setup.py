@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'stationdiy',
   packages = ['stationdiy'], # this must be the same as the name above
-  version = '0.8',
+  version = '0.92',
   description = 'Custom Controller for StationDiY IoT platform',
   author = 'Baurin Leza',
   author_email = 'baurin.lg@gmail.com',
@@ -13,7 +13,5 @@ setup(
   install_requires=[
         'paho-mqtt',
         'requests',
-        'random',
-        'threading',
     ]
 )

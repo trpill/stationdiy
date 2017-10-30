@@ -12,9 +12,9 @@ import threading
 
 class StationDiY():
 
-    def __init__(self, username = "", password = "", device = "", actioner = "", data_actioner = "", sensor = "", data = "", longitud = "", latitud = ""):
+    def __init__(self, host="stationdiy.eu", username = "", port = 8000, password = "", device = "", actioner = "", data_actioner = "", sensor = "", data = "", longitud = "", latitud = ""):
         
-
+        self.host = host
         self.device = device
         self.sensor = sensor
         self.data = data
@@ -22,7 +22,8 @@ class StationDiY():
         self.data_actioner = data_actioner
         self.longitud = longitud
         self.latitud = latitud
-        self.url = "http://localhost:8000/api/"
+        self.port = port
+        self.url = "http://%s:%s/api/"%(self.host, self.port)
 
 
     def login(self, username, password):
@@ -204,4 +205,8 @@ class StationDiY():
     #     subscribe_client.on_message = on_message
     #     subscribe_client.on_subscribe = on_subscribe
 
+# python setup.py register -r pypitest
+# python setup.py sdist upload -r pypitest
+# python setup.py register -r pypi
+# python setup.py sdist upload -r pypi
 
