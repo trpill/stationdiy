@@ -62,7 +62,7 @@ class StationDiY():
 
         client = mqtt.Client()
         client.on_message = on_message
-        client.connect(host="localhost", port=1883, keepalive=60, bind_address="")
+        client.connect(host=self.host, port=1883, keepalive=60, bind_address="")
         print "Subscribe to --->  %s/%s/%s"%(self.user_hash,device,actioner)
         def worker():
             client.loop_forever()
@@ -105,7 +105,7 @@ class StationDiY():
         self.mqttc.on_message = on_message
         self.mqttc.on_publish = on_publish
 
-        self.mqttc.connect(host="localhost", port=1883, keepalive=60, bind_address="")
+        self.mqttc.connect(host=self.host, port=1883, keepalive=60, bind_address="")
         self.mqttc.loop_forever()
 
     def setSensor(self, device, sensor, data):
