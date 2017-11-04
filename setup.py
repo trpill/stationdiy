@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'stationdiy',
   packages = ['stationdiy'], # this must be the same as the name above
-  version = '1.0',
+  version = '1.2',
   description = 'Custom Controller for StationDiY IoT platform',
   author = 'Baurin Leza',
   author_email = 'baurin.lg@gmail.com',

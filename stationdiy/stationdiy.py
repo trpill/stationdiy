@@ -73,6 +73,36 @@ class StationDiY():
         t.start()
         client.subscribe("%s/%s/%s"%(self.user_hash,device,actioner))
 
+    def subscribe_sensor(self, device, sensor):
+        
+        """
+        Subscribe to concrete actioner
+        """
+
+       
+        def on_message(mqttc, userdata, msg):
+            # print('message received...')
+            # print "-->%s"%userdata
+            # print('topic: ' + msg.topic + ', qos: ' + 
+            #       str(msg.qos) + ', message: ' + str(msg.payload))
+            print json.loads(msg.payload)
+
+        def on_publish(mqttc, userdata, mid):
+            mqttc.disconnect()
+
+        client = mqtt.Client()
+        client.on_message = on_message
+        client.connect(host=self.host, port=1883, keepalive=60, bind_address="")
+        print "Subscribe to --->  %s/%s/%s"%(self.user_hash,device,sensor)
+        def worker():
+            client.loop_forever()
+            return
+
+        t = threading.Thread(target=worker)
+        t.daemon = True
+        t.start()
+        client.subscribe("%s/%s/%s"%(self.user_hash,device,sensor))
+
     def sendMQTT(self):
         """ Send message """
 
