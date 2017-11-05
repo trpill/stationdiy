@@ -43,19 +43,11 @@ class StationDiY():
             self.authenticated = False
 
     
-    def subscribe_actioner(self, device, actioner):
+    def subscribe_actioner(self, device, actioner, on_message):
         
         """
         Subscribe to concrete actioner
         """
-
-       
-        def on_message(mqttc, userdata, msg):
-            # print('message received...')
-            # print "-->%s"%userdata
-            # print('topic: ' + msg.topic + ', qos: ' + 
-            #       str(msg.qos) + ', message: ' + str(msg.payload))
-            print json.loads(msg.payload)
 
         def on_publish(mqttc, userdata, mid):
             mqttc.disconnect()
@@ -63,7 +55,8 @@ class StationDiY():
         client = mqtt.Client()
         client.on_message = on_message
         client.connect(host=self.host, port=1883, keepalive=60, bind_address="")
-        print "Subscribe to --->  %s/%s/%s"%(self.user_hash,device,actioner)
+        print "Subscribe to --->  %s - %s"%(device,sensor)
+
         def worker():
             client.loop_forever()
             return
@@ -73,19 +66,11 @@ class StationDiY():
         t.start()
         client.subscribe("%s/%s/%s"%(self.user_hash,device,actioner))
 
-    def subscribe_sensor(self, device, sensor):
+    def subscribe_sensor(self, device, sensor, on_message):
         
         """
         Subscribe to concrete actioner
         """
-
-       
-        def on_message(mqttc, userdata, msg):
-            # print('message received...')
-            # print "-->%s"%userdata
-            # print('topic: ' + msg.topic + ', qos: ' + 
-            #       str(msg.qos) + ', message: ' + str(msg.payload))
-            print json.loads(msg.payload)
 
         def on_publish(mqttc, userdata, mid):
             mqttc.disconnect()
@@ -93,7 +78,8 @@ class StationDiY():
         client = mqtt.Client()
         client.on_message = on_message
         client.connect(host=self.host, port=1883, keepalive=60, bind_address="")
-        print "Subscribe to --->  %s/%s/%s"%(self.user_hash,device,sensor)
+        print "Subscribe to --->  %s - %s"%(device,sensor)
+        
         def worker():
             client.loop_forever()
             return
