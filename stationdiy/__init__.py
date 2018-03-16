@@ -58,7 +58,7 @@ class StationDiY():
 
         def on_message(mqttc, userdata, msg):
             print('message received...')
-            print "-->%s"%userdata
+            print ("-->%s"%userdata)
             print('topic: ' + msg.topic + ', qos: ' + 
                   str(msg.qos) + ', message: ' + str(msg.payload))
 
@@ -81,7 +81,7 @@ class StationDiY():
         self.sensor = sensor
         self.data = data
         if self.authenticated == True : self.sendMQTT()
-        else: print "No authenticated request api" 
+        else: print ("No authenticated request api") 
         self.clear()
 
     def clear(self):
@@ -118,7 +118,7 @@ class StationDiY():
         self.actioner = actioner
         self.data_actioner = data
         if self.authenticated == True : self.sendMQTT()
-        else: print "No authenticated request api" 
+        else: print ("No authenticated request api" )
         self.clear()
 
     def getActionerData(self, device, actioner):
