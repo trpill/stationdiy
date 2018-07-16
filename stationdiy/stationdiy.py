@@ -84,7 +84,7 @@ class StationDiY():
         t = threading.Thread(target=worker)
         t.daemon = True
         t.start()
-        client.subscribe("%s/%s/%s"%(self.user_hash,device,actioner))
+        client.subscribe("StationDiy/actioner/%s/%s/%s"%(self.user_hash,device,actioner))
 
     def subscribe_sensor(self, device, sensor, on_data):
         
@@ -92,10 +92,13 @@ class StationDiY():
         Subscribe to concrete actioner
         """
 
+
+
         def on_publish(mqttc, userdata, mid):
             mqttc.disconnect()
 
         def on_message(mqtcc, userdata, message):
+
             on_data(json.loads(message.payload))
 
         client = mqtt.Client()
@@ -104,25 +107,36 @@ class StationDiY():
         print ("Subscribe to --->  %s - %s"%(device,sensor))
         
         def worker():
+            # print "WORKER"
             client.loop_forever()
             return
 
         t = threading.Thread(target=worker)
         t.daemon = True
         t.start()
-        client.subscribe("%s/%s/%s"%(self.user_hash,device,sensor))
+        # print "subscrito a ->"
+        # print "StationDiy/sensor/%s/%s/%s"%(self.user_hash,device,sensor)
+        client.subscribe("StationDiy/sensor/%s/%s/%s"%(self.user_hash,device,sensor))
 
-    def sendMQTT(self):
+    def sendMQTT(self, **kwargs):
         """ Send message """
 
         def on_connect(mqttc, userdata, rc):
-            mqttc.publish(topic='StationDiy/',  payload='{"user_hash":"%s", \
-                "action":"%s","username":"%s","password":"%s","device":"%s",\
+
+            if "sensor" in kwargs:
+                topic='StationDiy/sensor/%s/%s/%s'%(self.user_hash,kwargs["device"],  kwargs["sensor"])
+            else:
+                topic='StationDiy/actioner/%s/%s/%s'%(self.user_hash, kwargs["device"], kwargs["actioner"])
+
+            # print "enviado a -> %s"%topic
+            
+            mqttc.publish(topic=topic,  payload='{ \
+                "action":"%s","device":"%s",\
                 "sensor":"%s","data":"%s", "actioner":"%s", "data_actioner":"%s", \
                 "longitud":"%s", "latitud": "%s",\
                 "description":"Lorem Ipsium Dev2...", "type_data":"%s", "max_value":"%s", \
-                "min_value":"%s"}'%(self.user_hash, \
-                    self.action, self.username, self.password, \
+                "min_value":"%s"}'%( \
+                    self.action, \
                     self.device, self.sensor, self.data, self.actioner, \
                     self.data_actioner, self.longitud, self.latitud, self.type_data, \
                     self.max_value, self.min_value), qos=0)
@@ -156,13 +170,13 @@ class StationDiY():
         self.mqttc.connect(host=self.host, port=1883, keepalive=60, bind_address="")
         self.mqttc.loop_forever()
 
-    def setSensor(self, device, sensor, data, type_data = "string"):
+    def setSensor(self, **kwargs ):
         """ Set sensor by mqtt """
 
-        self.device = device
-        self.sensor = sensor
-        self.data = data
-        if self.authenticated == True : self.sendMQTT()
+        self.device = kwargs["device"]
+        self.sensor = kwargs["sensor"]
+        self.data = kwargs["data"]
+        if self.authenticated == True : self.sendMQTT(**kwargs)
         else: print ("No authenticated request api") 
         self.clear()
 
@@ -194,12 +208,12 @@ class StationDiY():
         else : return -1 
 
 
-    def setActioner(self, device, actioner, data, type_data = "string"):
+    def setActioner(self, **kwargs):
         """ Set actioner data by mqtt """
-        self.device = device
-        self.actioner = actioner
-        self.data_actioner = data
-        if self.authenticated == True : self.sendMQTT()
+        self.device = kwargs["device"]
+        self.sensor = kwargs["actioner"]
+        self.data_actioner = kwargs["data"]
+        if self.authenticated == True : self.sendMQTT(**kwargs)
         else: print ("No authenticated request api" )
         self.clear()
 
