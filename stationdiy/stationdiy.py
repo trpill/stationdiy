@@ -124,12 +124,15 @@ class StationDiY():
         def on_connect(mqttc, userdata, rc):
 
             if "sensor" in kwargs:
+                self.actioner = ""
                 topic='StationDiy/sensor/%s/%s/%s'%(self.user_hash,kwargs["device"],  kwargs["sensor"])
             else:
+                self.sensor = ""
                 topic='StationDiy/actioner/%s/%s/%s'%(self.user_hash, kwargs["device"], kwargs["actioner"])
 
-            # print "enviado a -> %s"%topic
-            
+            #print "enviado a -> %s"%topic
+
+
             mqttc.publish(topic=topic,  payload='{ \
                 "action":"%s","device":"%s",\
                 "sensor":"%s","data":"%s", "actioner":"%s", "data_actioner":"%s", \
@@ -211,7 +214,7 @@ class StationDiY():
     def setActioner(self, **kwargs):
         """ Set actioner data by mqtt """
         self.device = kwargs["device"]
-        self.sensor = kwargs["actioner"]
+        self.actioner = kwargs["actioner"]
         self.data_actioner = kwargs["data"]
         if self.authenticated == True : self.sendMQTT(**kwargs)
         else: print ("No authenticated request api" )

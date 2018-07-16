@@ -1,8 +1,8 @@
 from distutils.core import setup
 setup(
-  name = 'stationdiy',
-  packages = ['stationdiy'], # this must be the same as the name above
-  version = '5.3',
+  name = 'stationdiyV2',
+  packages = ['stationdiyV2'], # this must be the same as the name above
+  version = '6.0',
   description = 'Custom Controller for StationDiY IoT platform',
   author = 'Baurin Leza',
   author_email = 'baurin.lg@gmail.com',
@@ -11,7 +11,7 @@ setup(
   keywords = ['mqtt', 'stationdiy', 'iot', 'internet'], #  keywords
   classifiers = [],
   install_requires=[
-        'paho-mqtt',
+        'paho-mqtt==1.2',
         'requests',
     ]
 )
